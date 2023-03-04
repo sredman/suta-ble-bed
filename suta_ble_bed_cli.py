@@ -10,16 +10,38 @@
 import asyncio
 import argparse
 from argparse import Namespace
+import logging
 
 import scanner as suta_scanner
+from suta_ble_bed import BleSutaBed
+
+logger = logging.getLogger(__name__)
 
 async def worker(args: Namespace):
     devices = await suta_scanner.discover(args.MAC)
 
     for device in devices:
-        pass
+        logger.info(f"Discovered {device}")
 
-    print(devices)
+    if len(devices) == 0:
+        logger.error("No devices detected.")
+        raise
+    elif len(devices) > 1:
+        logger.error("Multiple devices detected. Please select one using the MAC parameter.")
+        raise
+
+    device = devices[0]
+    bed = BleSutaBed(device)
+
+    match args.command:
+        case "feet-up":
+            await bed.raise_feet()
+        case "feet-down":
+            await bed.lower_feet()
+        case "head-up":
+            await bed.raise_head()
+        case "head-down":
+            await bed.lower_head()
 
 if __name__ == "__main__":
 
@@ -33,7 +55,7 @@ if __name__ == "__main__":
         help="MAC Address of your bed. May be ommitted, in which case we will attempt auto-discovery.")
     
     parser.add_argument(
-        "-c", "--command",
+        "command",
         choices=["feet-up", "feet-down", "head-up", "head-down"],
         help="Action to perform")
     
