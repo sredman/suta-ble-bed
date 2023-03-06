@@ -12,7 +12,7 @@ import argparse
 from argparse import Namespace
 import logging
 
-import scanner as suta_scanner
+import suta_ble_scanner as suta_scanner
 from suta_ble_bed import BleSutaBed
 
 logger = logging.getLogger(__name__)
