@@ -12,13 +12,13 @@ import argparse
 from argparse import Namespace
 import logging
 
-import suta_ble_scanner as suta_scanner
-from suta_ble_bed import BleSutaBed
+from ..suta_ble_bed import BleSutaBed
+from ..suta_ble_scanner import discover
 
 logger = logging.getLogger(__name__)
 
 async def worker(args: Namespace):
-    devices = await suta_scanner.discover(args.MAC)
+    devices = await discover(args.MAC)
 
     for device in devices:
         logger.info(f"Discovered {device}")
@@ -43,8 +43,7 @@ async def worker(args: Namespace):
         case "head-down":
             await bed.lower_head()
 
-if __name__ == "__main__":
-
+def main():
     parser = argparse.ArgumentParser(
         prog="SUTA BLE Control",
         description="Control your Bluetooth-enabled SUTA (and other) bed.")
@@ -62,4 +61,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     asyncio.run(worker(args))
-    
+
+if __name__ == "__main__":
+    main()

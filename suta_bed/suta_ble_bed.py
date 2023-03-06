@@ -32,7 +32,7 @@ from collections.abc import AsyncIterator
 from typing import Any, Callable, Literal
 import logging
 
-from suta_ble_consts import BedServices, BedCommands, BedCharacteristic
+from .suta_ble_consts import BedServices, BedCommands, BedCharacteristic
 
 logger = logging.getLogger(__name__)
 

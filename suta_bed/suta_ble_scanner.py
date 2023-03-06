@@ -13,7 +13,7 @@ from bleak.backends.device import BLEDevice
 
 from typing import Any
 
-from suta_ble_consts import BedCharacteristic, IS_LINUX, BED_LOCAL_NAME
+from .suta_ble_consts import BedCharacteristic, IS_LINUX, BED_LOCAL_NAME
 
 def build_scanner_kwargs(adapter: str | None = None) -> dict[str, Any]:
     """Add Adapter to kwargs for scanner if specified and using BlueZ."""
