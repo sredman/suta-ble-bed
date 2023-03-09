@@ -3,7 +3,7 @@
 #
 # Author: Simon Redman <simon@ergotech.com>
 # File Created: 05.03.2023
-# Last Modified: Wed 08 Mar 2023 09:15:06 PM EST
+# Last Modified: Wed 08 Mar 2023 09:17:38 PM EST
 # Description: 
 #
 #
@@ -12,7 +12,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='suta_bed',
-    version='0.1.2',
+    version='0.1.3',
     license='MIT',
     author="Simon Redman",
     author_email='simon@ergotech.com',
