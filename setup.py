@@ -16,7 +16,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name='suta_bed',
-    version='0.1.3',
+    version='0.1.4',
     license='MIT',
     author="Simon Redman",
     author_email='simon@ergotech.com',
