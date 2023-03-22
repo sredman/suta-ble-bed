@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Filename: suta_ble_bed_cli.py
+# Filename: cli.py
 #
 # Author: Simon Redman <simon@ergotech.com>
 # File Created: 03.03.2023
