@@ -23,7 +23,7 @@ async def worker(args: Namespace):
         async for bed in controller.devices():
             logger.info(f"Discovered {bed.device}")
 
-            if (bed.device.address == args.MAC):
+            if (args.MAC is None or bed.device.address == args.MAC):
                 match args.command:
                     case "feet-up":
                         await bed.raise_feet()
