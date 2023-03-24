@@ -12,8 +12,8 @@ import argparse
 from argparse import Namespace
 import logging
 
-from ..suta_ble_bed import BleSutaBed
-from ..suta_ble_scanner import discover
+from .suta_ble_bed import BleSutaBed
+from .suta_ble_bed_controller import SutaBleBedController
 
 logger = logging.getLogger(__name__)
 
