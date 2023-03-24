@@ -8,30 +8,34 @@
 
 import asyncio
 
-from bleak import BleakScanner
+from bleak import AdvertisementData
 from bleak.backends.device import BLEDevice
 
 from typing import Any
 
+from .suta_ble_bed import BleSutaBed
 from .suta_ble_consts import BedCharacteristic, IS_LINUX, BED_LOCAL_NAME
 
-def build_scanner_kwargs(adapter: str | None = None) -> dict[str, Any]:
-    """Add Adapter to kwargs for scanner if specified and using BlueZ."""
-    if adapter and IS_LINUX is not True:
-        raise ValueError('The adapter option is only valid for the Linux BlueZ Backend.')
-    return {'adapter': adapter} if adapter else {}
+class SutaBleScanner():
 
-async def discover(mac: str | None, adapter: str | None = None, wait: int = 5) -> list[BLEDevice]:
-    '''
-    Scan for devices which expose the interface we expect.
-    Do not attempt to connect.
-    '''
-    scanner_kwargs = build_scanner_kwargs(adapter)
-    async with BleakScanner() as scanner:
-        await asyncio.sleep(wait)
-        if mac:
-            mac = mac.lower()
-            return [d for d in scanner.discovered_devices if d.address.lower() == mac]
-        else:
-            devices_and_advertisements = scanner.discovered_devices_and_advertisement_data
-            return [d for d, a in devices_and_advertisements.values() if a.local_name == BED_LOCAL_NAME]
+    def __init__(self) -> None:
+        self.scanner_running_lock = asyncio.Lock()
+
+        self._new_devices = asyncio.Queue()
+
+        self._tasks = set()
+
+    def __aiter__(self):
+        return self
+
+    async def __anext__(self) -> BleSutaBed:
+        return await self._new_devices.get()
+
+    def _scanner_discovery_callback(self, device: BLEDevice, advertising_data: AdvertisementData) -> None:
+        task = asyncio.create_task(self._scanner_discovery_callback_int(device, advertising_data))
+        self._tasks.add(task)
+        task.add_done_callback(self._tasks.discard)
+
+    async def _scanner_discovery_callback_int(self, device: BLEDevice, advertising_data: AdvertisementData) -> None:
+        if advertising_data.local_name == BED_LOCAL_NAME:
+            await self._new_devices.put(BleSutaBed(device, self))

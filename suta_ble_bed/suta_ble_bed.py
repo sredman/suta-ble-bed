@@ -41,10 +41,17 @@ class BleSutaBed:
     def __init__(
         self,
         ble_device: BLEDevice,
-        include_extra: bool = False,
+        controller,
         **kwargs: Any,
     ) -> None:
+        """
+        Constructor
+
+        @param ble_device: The bleak.BLEDevice which represents the connection to the bed
+        @param controller: The SutaBleBedController which controls this connection
+        """
         self.device = ble_device
+        self.controller = controller
 
         self._client: BleakClient = None  # type: ignore[assignment]
         self._connect_lock = asyncio.Lock()

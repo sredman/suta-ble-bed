@@ -18,30 +18,24 @@ from .suta_ble_bed_controller import SutaBleBedController
 logger = logging.getLogger(__name__)
 
 async def worker(args: Namespace):
-    devices = await discover(args.MAC)
 
-    for device in devices:
-        logger.info(f"Discovered {device}")
+    async with SutaBleBedController() as controller:
+        async for bed in controller.devices():
+            logger.info(f"Discovered {bed.device}")
 
-    if len(devices) == 0:
-        logger.error("No devices detected.")
-        raise
-    elif len(devices) > 1:
-        logger.error("Multiple devices detected. Please select one using the MAC parameter.")
-        raise
-
-    device = devices[0]
-    bed = BleSutaBed(device)
-
-    match args.command:
-        case "feet-up":
-            await bed.raise_feet()
-        case "feet-down":
-            await bed.lower_feet()
-        case "head-up":
-            await bed.raise_head()
-        case "head-down":
-            await bed.lower_head()
+            if (bed.device.address == args.MAC):
+                match args.command:
+                    case "feet-up":
+                        await bed.raise_feet()
+                    case "feet-down":
+                        await bed.lower_feet()
+                    case "head-up":
+                        await bed.raise_head()
+                    case "head-down":
+                        await bed.lower_head()
+                break
+            else:
+                logger.info(f"Skipping because MAC did not match.")
 
 def main():
     parser = argparse.ArgumentParser(
