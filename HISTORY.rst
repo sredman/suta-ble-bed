@@ -2,6 +2,13 @@
 History
 =======
 
+0.3.0 (2023-030-23)
+-------------------
+
+* Change to Controller interface
+* Fix copy-paste errors
+* Add "is_connected" helper
+
 0.2.0 (2023-03-21)
 ------------------
 
