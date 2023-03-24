@@ -51,6 +51,8 @@ class BleSutaBed:
         self._operation_lock = asyncio.Lock()
         self._expected_disconnect = False
 
+    def is_connected(self) -> bool:
+        return self._client is not None and self._client.is_connected
 
     async def raise_feet(self) -> None:
         '''
@@ -94,12 +96,12 @@ class BleSutaBed:
         if self._connect_lock.locked():
             logger.debug("Connection to %s already in progress. Waiting first.", self.device.name)
 
-        if self._client is not None and self._client.is_connected:
+        if self.is_connected():
             return
 
         async with self._connect_lock:
             # Also check after lock is acquired
-            if self._client is not None and self._client.is_connected:
+            if self.is_connected:
                 return
             try:
                 logger.debug(f"Connecting to {self.device}")
