@@ -26,11 +26,14 @@ import contextlib
 from bleak import BleakClient, BleakError, BleakScanner
 from bleak.backends.characteristic import BleakGATTCharacteristic
 from bleak.backends.device import BLEDevice
-from bleak_retry_connector import establish_connection
 
 from collections.abc import AsyncIterator
+import typing
 from typing import Any, Callable, Literal
 import logging
+
+if typing.TYPE_CHECKING:
+    from .suta_ble_bed_controller import SutaBleBedController
 
 from .suta_ble_consts import BedServices, BedCommands, BedCharacteristic
 
@@ -41,7 +44,7 @@ class BleSutaBed:
     def __init__(
         self,
         ble_device: BLEDevice,
-        controller,
+        controller: SutaBleBedController,
         **kwargs: Any,
     ) -> None:
         """
@@ -51,7 +54,7 @@ class BleSutaBed:
         @param controller: The SutaBleBedController which controls this connection
         """
         self.device = ble_device
-        self.controller = controller
+        self.controller: SutaBleBedController = controller
 
         self._client: BleakClient = None  # type: ignore[assignment]
         self._connect_lock = asyncio.Lock()
@@ -106,47 +109,6 @@ class BleSutaBed:
         if self.is_connected():
             return
 
-        async with self._connect_lock:
-            # Also check after lock is acquired
-            if self.is_connected:
-                return
-            try:
-                logger.debug(f"Connecting to {self.device}")
-                async with BleakScanner():
-                    # Need to have the scanner running in order for Bluez to populate the device
-                    client = await establish_connection(
-                        client_class=BleakClient,
-                        device=self.device,
-                        name=f'{self.device.name} ({self.device.address})',
-                        use_services_cache=True,
-                        disconnected_callback=self._disconnect_callback,  # type: ignore
-                        ble_device_callback=lambda: self.device,
-                    )
-                    self._expected_disconnect = False
-                    self._client = client
-            except (asyncio.TimeoutError, BleakError) as error:
-                logger.error("%s: Failed to connect to the bed: %s", self.device, error)
-                raise
+        self._client = await self.controller.connect(self)
+        self._expected_disconnect = False
         return
-
-    def _disconnect_callback(self, client: BleakClient) -> None:
-        """Disconnect from device."""
-        if self._expected_disconnect:
-            logger.debug("Disconnect callback called")
-        else:
-            logger.warning("Unexpectedly disconnected")
-
-    def set_client_options(self, **kwargs: str) -> None:
-        """Update options in case they need to overriden in some cases."""
-        if kwargs.get('adapter') and IS_LINUX is False:
-            raise ValueError('The adapter option is only valid for the Linux BlueZ Backend.')
-        self._client_kwargs = {**kwargs}
-
-    @contextlib.asynccontextmanager
-    async def connection(self, **kwargs: str) -> AsyncIterator[BleSutaBed]:
-        """Helper for establishing a connection and automatically closing it."""
-        self.set_client_options(**kwargs)
-        # This will happen automatically, but calling it now will give us immediate feedback
-        await self._ensure_connection()
-        yield self
-        await self.disconnect()
