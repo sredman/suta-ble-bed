@@ -43,17 +43,21 @@ Features
 Usage
 --------
 
-```
-device = await suta_scanner.discover()[0]
-bed = BleSutaBed(device)
-await bed.raise_feet()
-```
+.. code-block:: python
+   :caption: Sample library usage
+    async with SutaBleBedController() as controller:
+      async for bed in controller.devices():
+        await bed.raise_feet()
+        break
+
+Note that the `async for` will return a result each time the advertising data changes,
+which includes any time the signal strength changes.
 
 or
 
-```
-./suta_ble_bed_cli.py raise-feet
-```
+.. code-block:: sh
+  ::caption:: Sample command-line usage
+  python -m suta_ble_bed --MAC=AA:BB:CC:DD:EE:FF head-down
 
 Credits
 -------
