@@ -77,7 +77,7 @@ class BleSutaBed:
         await self._write(BedServices.CONTROL, BedCharacteristic.CONTROL_COMMAND, data=BedCommands.HEAD_DOWN.to_bytes(5, 'big'))
 
     async def _write(self, service: BedServices, characteristic: BedCharacteristic, data: bytearray) -> None:
-        """Helper to write characteristic to Mug."""
+        """Helper to write characteristic."""
         if self._operation_lock.locked():
             logger.debug("Operation already in progress. Waiting for it to complete")
         async with self._operation_lock:
@@ -116,7 +116,7 @@ class BleSutaBed:
                     self._expected_disconnect = False
                     self._client = client
             except (asyncio.TimeoutError, BleakError) as error:
-                logger.error("%s: Failed to connect to the mug: %s", self.device, error)
+                logger.error("%s: Failed to connect to the bed: %s", self.device, error)
                 raise
         return
 
