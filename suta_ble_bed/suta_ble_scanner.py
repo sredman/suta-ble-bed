@@ -18,8 +18,8 @@ from .suta_ble_consts import BedCharacteristic, IS_LINUX, BED_LOCAL_NAME
 
 class SutaBleScanner():
 
-    def __init__(self) -> None:
-        self.scanner_running_lock = asyncio.Lock()
+    def __init__(self, controller) -> None:
+        self.controller = controller
 
         self._new_devices = asyncio.Queue()
 
@@ -38,4 +38,4 @@ class SutaBleScanner():
 
     async def _scanner_discovery_callback_int(self, device: BLEDevice, advertising_data: AdvertisementData) -> None:
         if advertising_data.local_name == BED_LOCAL_NAME:
-            await self._new_devices.put(BleSutaBed(device, self))
+            await self._new_devices.put(BleSutaBed(device, self.controller))

@@ -32,7 +32,7 @@ class SutaBleBedController(AbstractAsyncContextManager):
         """
         super().__init__()
 
-        self._bed_scanner = SutaBleScanner()
+        self._bed_scanner = SutaBleScanner(self)
         self._bleak_scanner = BleakScanner(
             detection_callback=self._bed_scanner._scanner_discovery_callback,
             adapter=adapter)
