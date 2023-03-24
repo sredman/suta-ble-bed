@@ -2,7 +2,13 @@
 History
 =======
 
-0.3.0 (2023-030-23)
+0.3.1 (2023-03-23)
+------------------
+* Fix connection handling with Controller interface
+* Fix CLI in case MAC is not provided
+* Pass correct parameter when constructing SutaBleBed under callback
+
+0.3.0 (2023-03-23)
 -------------------
 
 * Change to Controller interface
