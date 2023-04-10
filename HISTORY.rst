@@ -2,6 +2,11 @@
 History
 =======
 
+0.3.2 (2023-04-10
+----------------
+* Fix disconnect callback
+* Correct comment on BLE characteristics
+
 0.3.1 (2023-03-23)
 ------------------
 * Fix connection handling with Controller interface
