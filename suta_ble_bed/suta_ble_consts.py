@@ -24,8 +24,8 @@ class BedServices(Enum):
 # Characteristics exposed by the bed
 class BedCharacteristic(Enum):
     CONTROL_COMMAND = 'd44bc439-abfd-45a2-b575-925416129600' # Send commands here - Write
-    CONTROL_READ = 'd44bc439-abfd-45a2-b575-925416129601' # Read the current state here. Read/Notify
-    ACK_CMD_ACK = '0000ffe1-0000-1000-8000-00805f9b34fb' # "ACK OutPut" - Read/Notify
+    CONTROL_READ = 'd44bc439-abfd-45a2-b575-925416129601' # Read the current state here - Notify
+    ACK_CMD_ACK = '0000ffe1-0000-1000-8000-00805f9b34fb' # "ACK OutPut" - Notify
     ACK_CMD_CMD = '0000ffe2-0000-1000-8000-00805f9b34fb' # "CMD Input" - Write
     UPDATE_OTA = '00010203-0405-0607-0809-0a0b0c0d2b12' # Brick your bed here - Write
 
