@@ -44,7 +44,7 @@ Usage
 --------
 
 .. code-block:: python
-   :caption: Sample library usage
+
     async with SutaBleBedController() as controller:
       async for bed in controller.devices():
         await bed.raise_feet()
@@ -56,8 +56,8 @@ which includes any time the signal strength changes.
 or
 
 .. code-block:: sh
-  ::caption:: Sample command-line usage
-  python -m suta_ble_bed --MAC=AA:BB:CC:DD:EE:FF head-down
+
+   python -m suta_ble_bed --MAC=AA:BB:CC:DD:EE:FF head-down
 
 Credits
 -------
