@@ -51,9 +51,9 @@ class SutaBleBedController(AbstractAsyncContextManager):
     def devices(self):
         return self._bed_scanner
 
-    def _disconnect_callback(self, client: BleakClient) -> None:
+    def _disconnect_callback(self, device: BleSutaBed, client: BleakClient) -> None:
         """Disconnected from device."""
-        if client._expected_disconnect:
+        if device._expected_disconnect:
             logger.debug("Disconnect callback called")
         else:
             logger.warning("Unexpectedly disconnected")
@@ -78,10 +78,10 @@ class SutaBleBedController(AbstractAsyncContextManager):
                     device=bed.device,
                     name=f'{bed.device.name} ({bed.device.address})',
                     use_services_cache=True,
-                    disconnected_callback=self._disconnect_callback,  # type: ignore
+                    disconnected_callback=lambda client: self._disconnect_callback(bed, client),  # type: ignore
                     ble_device_callback=lambda: bed.device,
                 )
                 return client
             except (asyncio.TimeoutError, BleakError) as error:
-                logger.error("%s: Failed to connect to the bed: %s", self.device, error)
+                logger.error("%s: Failed to connect to the bed: %s", bed.device, error)
                 raise
