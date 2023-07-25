@@ -2,6 +2,10 @@
 History
 =======
 
+0.3.3 (2023-07-24)
+------------------
+* Added release pipeline
+
 0.3.2 (2023-04-10)
 ------------------
 * Fix disconnect callback
