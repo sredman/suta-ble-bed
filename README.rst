@@ -65,7 +65,7 @@ Credits
 This module would not have been possible without the research done by stevendodd on Github:
 https://github.com/stevendodd/sleepmotion-ble/blob/main/pi-zero/sleepmotion-ble.py
 
-Inspirired by:
+Inspired by:
 https://github.com/sopelj/python-ember-mug/blob/main/ember_mug/mug.py
 
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
