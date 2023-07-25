@@ -59,6 +59,26 @@ or
 
    python -m suta_ble_bed --MAC=AA:BB:CC:DD:EE:FF head-down
 
+Release Process
+---------------
+
+To tag and release the latest code:
+
+.. code-block:: sh
+
+   # Write release notes
+   vim HISTORY.rst
+   git add HISTORY.rst
+   git commit -m "Release notes for vx.y.z"
+   # Bump
+   bump2version [patch,minor,major]
+   # Assuming no errors ...
+   git push --tags
+
+Go to this repository in Github, make a new release using the UI.
+
+The Github Action should then take care of publishing the release on Pypi.
+
 Credits
 -------
 
