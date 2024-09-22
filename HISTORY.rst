@@ -2,12 +2,16 @@
 History
 =======
 
+0.3.6 (2024-09-22)
+------------------
+* Correct syntax of release notes
+
 0.3.5 (2024-09-22)
------------------
+------------------
 * Correct silly typo in release process
 
 0.3.4 (2024-09-22)
------------------
+------------------
 * Add more supported commands
 
 0.3.3 (2023-07-24)
