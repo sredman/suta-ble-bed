@@ -88,6 +88,60 @@ class BleSutaBed:
         '''
         await self._write(BedServices.CONTROL, BedCharacteristic.CONTROL_COMMAND, data=BedCommands.HEAD_DOWN.to_bytes(5, 'big'))
 
+    async def raise_head_and_feet(self) -> None:
+        '''
+        Raise the head and feet of the bed a notch.
+        '''
+        await self._write(BedServices.CONTROL, BedCharacteristic.CONTROL_COMMAND, data=BedCommands.HEAD_AND_FEET_UP.to_bytes(5, 'big'))
+
+    async def lower_head_and_feet(self) -> None:
+        '''
+        Lower the head and feet of the bed a notch.
+        '''
+        await self._write(BedServices.CONTROL, BedCharacteristic.CONTROL_COMMAND, data=BedCommands.HEAD_AND_FEET_DOWN.to_bytes(5, 'big'))
+
+    async def beep(self) -> None:
+        '''
+        Beep the bed.
+        '''
+        await self._write(BedServices.CONTROL, BedCharacteristic.CONTROL_COMMAND, data=BedCommands.THREE_BEEP1.to_bytes(5, 'big'))
+
+    async def vibrate_head(self) -> None:
+        '''
+        Toggle vibration on the head of the bed.
+        '''
+        await self._write(BedServices.CONTROL, BedCharacteristic.CONTROL_COMMAND, data=BedCommands.VIBRATE_HEAD.to_bytes(5, 'big'))
+
+    async def vibrate_feet(self) -> None:
+        '''
+        Toggle vibration on the feet of the bed.
+        '''
+        await self._write(BedServices.CONTROL, BedCharacteristic.CONTROL_COMMAND, data=BedCommands.VIBRATE_FEET.to_bytes(5, 'big'))
+
+    async def flat(self) -> None:
+        '''
+        Set the bed to flat.
+        '''
+        await self._write(BedServices.CONTROL, BedCharacteristic.CONTROL_COMMAND, data=BedCommands.FLAT.to_bytes(5, 'big'))
+
+    async def zero_gravity(self) -> None:
+        '''
+        Set the bed to zero gravity.
+        '''
+        await self._write(BedServices.CONTROL, BedCharacteristic.CONTROL_COMMAND, data=BedCommands.ZERO_GRAVITY.to_bytes(5, 'big'))
+
+    async def lounge(self) -> None:
+        '''
+        Set the bed to lounge.
+        '''
+        await self._write(BedServices.CONTROL, BedCharacteristic.CONTROL_COMMAND, data=BedCommands.LOUNGE.to_bytes(5, 'big'))
+
+    async def elevated_sleep(self) -> None:
+        '''
+        Set the bed to elevated sleep.
+        '''
+        await self._write(BedServices.CONTROL, BedCharacteristic.CONTROL_COMMAND, data=BedCommands.ELEVATED_SLEEP.to_bytes(5, 'big'))
+
     async def _write(self, service: BedServices, characteristic: BedCharacteristic, data: bytearray) -> None:
         """Helper to write characteristic."""
         if self._operation_lock.locked():

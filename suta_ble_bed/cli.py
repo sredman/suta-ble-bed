@@ -14,6 +14,7 @@ import logging
 
 from .suta_ble_bed import BleSutaBed
 from .suta_ble_bed_controller import SutaBleBedController
+from .suta_ble_consts import BedCommands
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +50,7 @@ def main():
     
     parser.add_argument(
         "command",
-        choices=["feet-up", "feet-down", "head-up", "head-down"],
+        choices=[command.name.lower().replace("_", "-") for command in BedCommands],
         help="Action to perform")
     
     args = parser.parse_args()
