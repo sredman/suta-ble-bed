@@ -14,4 +14,4 @@ __all__ = ('BleSutaBed',)
 
 __author__ = """Simon Redman"""
 __email__ = 'simon@ergotech.com'
-__version__ = '0.3.5'
+__version__ = '__version__ = '0.3.5''
