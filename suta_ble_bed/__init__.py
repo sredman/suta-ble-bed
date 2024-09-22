@@ -3,7 +3,7 @@
 #
 # Author: Simon Redman <simon@ergotech.com>
 # File Created: 05.03.2023
-# Last Modified: Sun 05 Mar 2023 10:16:52 PM EST
+# Last Modified: Sun Sep 22 11:40:20 2024
 # Description: 
 #
 #
@@ -14,4 +14,4 @@ __all__ = ('BleSutaBed',)
 
 __author__ = """Simon Redman"""
 __email__ = 'simon@ergotech.com'
-__version__ = '1.0.0'
+__version__ = '__version__ = '0.3.4''
