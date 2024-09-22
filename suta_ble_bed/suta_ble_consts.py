@@ -47,9 +47,8 @@ class BedCommands(IntEnum):
     THREE_BEEP2 = 0x6e01002c9b
     THREE_BEEP3 = 0x6e01002d9c
 
-    # I can't find a button for this on the remote. The legs and head are both a bit elevated, much less than zero gravity mode.
-    ELEVATED_SLEEP = 0x6e01002e9d
-    LOUNGE = 0x6e01002f9e
+    LOUNGE = 0x6e01002e9d
+    #LOUNGE2 = 0x6e01002f9e
     FLAT = 0x6e010031a0
 
     VIBRATE_HEAD = 0x6e010032a1

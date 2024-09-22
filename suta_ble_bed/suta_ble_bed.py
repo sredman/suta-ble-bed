@@ -136,12 +136,6 @@ class BleSutaBed:
         '''
         await self._write(BedServices.CONTROL, BedCharacteristic.CONTROL_COMMAND, data=BedCommands.LOUNGE.to_bytes(5, 'big'))
 
-    async def elevated_sleep(self) -> None:
-        '''
-        Set the bed to elevated sleep.
-        '''
-        await self._write(BedServices.CONTROL, BedCharacteristic.CONTROL_COMMAND, data=BedCommands.ELEVATED_SLEEP.to_bytes(5, 'big'))
-
     async def _write(self, service: BedServices, characteristic: BedCharacteristic, data: bytearray) -> None:
         """Helper to write characteristic."""
         if self._operation_lock.locked():
