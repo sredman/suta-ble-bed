@@ -2,6 +2,10 @@
 History
 =======
 
+0.3.4 (2024-09-22)
+-----------------
+* Add more supported commands
+
 0.3.3 (2023-07-24)
 ------------------
 * Added release pipeline
