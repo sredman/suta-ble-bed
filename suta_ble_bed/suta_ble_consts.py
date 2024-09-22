@@ -35,11 +35,25 @@ class BedCommands(IntEnum):
     https://github.com/stevendodd/sleepmotion-ble/blob/main/pi-zero/sleepmotion-ble.py
     '''
     LIGHT = 0x6e01003cab
+
     ZERO_GRAVITY = 0x6e010045b4
     FLAT = 0x6e010031a0
+    ELEVATED_SLEEP = 0x6e01002E9D # I can't find a button for this on the remote. The legs and head are both a bit elevated, much less than zero gravity mode.
+
+    VIBRATE_HEAD = 0x6e010032a1
+    VIBRATE_FEET = 0x6e010033a2
+
     HEAD_UP = 0x6e01002493
     HEAD_DOWN = 0x6e01002594
     FEET_UP = 0x6e01002695
     FEET_DOWN = 0x6e01002796
+
+    # Maybe it's tring to tell me that I'm sending an illegal command?
+    THREE_BEEP = 0x6e01002D9C
+    THREE_BEEP2 = 0x6e01002C9B
+    THREE_BEEP3 = 0x6e01002B9A
+
+    HEAD_AND_FEET_UP = 0x6e01002A99
+    HEAD_AND_FEET_DOWN = 0x6e01002998
 
 IS_LINUX = platform.system() == "Linux"
