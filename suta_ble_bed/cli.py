@@ -34,6 +34,16 @@ async def worker(args: Namespace):
                         await bed.raise_head()
                     case "head-down":
                         await bed.lower_head()
+                    case "vibrate-head":
+                        await bed.vibrate_head()
+                    case "vibrate-feet":
+                        await bed.vibrate_feet()
+                    case "zero-gravity":
+                        await bed.zero_gravity()
+                    case "flat":
+                        await bed.flat()
+                    case "lounge":
+                        await bed.lounge()
                 break
             else:
                 logger.info(f"Skipping because MAC did not match.")
